@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="HelloWorld" default="compile" basedir=".">
+    <property name="src" value="src"/>
+    <property name="dest" value="classes"/>
+    <property name="jar" value="helloworld.jar"/>
+
+    <property name="libDir" location="lib" description="第三方依赖jar包存放路径" />
+    <path id="libPath" description="第三方依赖jar包存放路径">
+        <fileset dir="${libDir}" erroronmissingdir="false">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    <property name="classpath" refid="libPath" description="第三方依赖jar包存放路径" />
+
+    <target name="build">
+        <mkdir dir="${dest}"/>
+        <javac srcdir="${src}" destdir="${dest}"/>
+        <jar jarfile="${jar}" basedir="${dest}"/>
+    </target>
+    <target name="compile" depends="build">
+        <java classname="HelloWorld" classpath="${jar}"/>
+    </target>
+    <target name="clean">
+        <delete dir="${dest}"/>
+        <delete file="${jar}"/>
+    </target>
+</project>
